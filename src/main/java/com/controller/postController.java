@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dto.GerUpdateImageForPost;
+import com.dto.GetInsertPost;
 import com.dto.GetUpdateInformationPostNotImage;
 import com.entity.posts;
 import com.reponsitory.postReponsitory;
@@ -37,7 +38,7 @@ public class postController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Void> insertPost(@RequestBody posts _getPostToInsertDto)
+	public ResponseEntity<Void> insertPost(@ModelAttribute GetInsertPost _getPostToInsertDto) throws IOException
 	{
 		pos.insertPost(_getPostToInsertDto);
 		

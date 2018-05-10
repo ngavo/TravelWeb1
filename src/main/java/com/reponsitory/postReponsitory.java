@@ -24,6 +24,7 @@ import com.ConfigApp.CloudinaryConfig;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dto.GerUpdateImageForPost;
+import com.dto.GetInsertPost;
 import com.dto.GetUpdateInformationPostNotImage;
 import com.entity.friends;
 import com.entity.posts;
@@ -45,10 +46,27 @@ public class postReponsitory {
 		return pos;
 	}
 	
-	public void insertPost(posts _post)
+	public void insertPost(GetInsertPost _post) throws IOException
 	{
-			_post.setTime(new Date());
-			mongoTemplate.insert(_post);
+		Cloudinary c = new  Cloudinary(ObjectUtils.asMap(
+				"cloud_name", "drpjudkfr",
+				  "api_key", "661119547315821",
+				  "api_secret", "mmp9IUQgnBMmYPEXlLgpN93SYgw"
+				));
+		
+		File f =  Files.createTempFile("temp", _post.getFile().getOriginalFilename()).toFile();
+		_post.getFile().transferTo(f);
+		Map response = c.uploader().upload(f, ObjectUtils.emptyMap());
+		String url=  (String)response.get("url");
+		
+		posts ps = new posts();
+		ps.setId_user(_post.getId_user());
+		ps.setContent(_post.getContent());
+		ps.setLocation(_post.getLocation());
+		ps.setUrl(url);
+		
+			ps.setTime(new Date());
+			mongoTemplate.insert(ps);
 		
 	}
 	
