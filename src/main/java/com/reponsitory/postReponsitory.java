@@ -25,9 +25,11 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dto.GerUpdateImageForPost;
 import com.dto.GetInsertPost;
+import com.dto.GetPostForHome;
 import com.dto.GetUpdateInformationPostNotImage;
 import com.entity.friends;
 import com.entity.posts;
+import com.entity.users;
 
 
 @Repository
@@ -70,7 +72,7 @@ public class postReponsitory {
 		
 	}
 	
-	public List<posts> findPostHome(String id_user)
+	public List<GetPostForHome> findPostHome(String id_user)
 	{
 		/*users listIdFriend = mongoTemplate.findOne(new Query(Criteria.where("id").is(new ObjectId(id_user))), users.class);*/
 		
@@ -116,7 +118,29 @@ public class postReponsitory {
 			}
 		});
 		
-		return ps;
+		List<GetPostForHome> postHome = new ArrayList<GetPostForHome>();
+		
+		
+		for(posts psD : ps)
+		{
+			GetPostForHome psH = new GetPostForHome();
+			psH.setId(psD.getId());
+			psH.setId_user(psD.getId_user());
+			psH.setContent(psD.getContent());
+			psH.setUrlPost(psD.getUrl());
+			psH.setLocation(psD.getLocation());
+			psH.setTime(psD.getTime());
+			
+			
+			users us = mongoTemplate.findOne(new Query(Criteria.where("id").is(psD.getId_user())), users.class);
+			
+			psH.setAvatar(us.getUrl());
+			psH.setNameUser(us.getNicName());
+			postHome.add(psH);
+			
+		}
+		
+		return postHome;
 		
 	}
 	

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dto.GerUpdateImageForPost;
 import com.dto.GetInsertPost;
+import com.dto.GetPostForHome;
 import com.dto.GetUpdateInformationPostNotImage;
 import com.entity.posts;
 import com.reponsitory.postReponsitory;
@@ -47,11 +48,11 @@ public class postController {
 	
 	@RequestMapping(value="/postHome/{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<posts>> findPostHome(@PathVariable("id") String id)
+	public ResponseEntity<List<GetPostForHome>> findPostHome(@PathVariable("id") String id)
 	{
 		/*pos.findPostHome(id);*/
 		
-		return new ResponseEntity<List<posts>>(pos.findPostHome(id),HttpStatus.OK);
+		return new ResponseEntity<List<GetPostForHome>>(pos.findPostHome(id),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
