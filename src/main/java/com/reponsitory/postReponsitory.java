@@ -129,7 +129,38 @@ public class postReponsitory {
 			psH.setContent(psD.getContent());
 			psH.setUrlPost(psD.getUrl());
 			psH.setLocation(psD.getLocation());
-			psH.setTime(psD.getTime());
+			@SuppressWarnings("deprecation")
+			long time = new Date().getTime()/1000 - psD.getTime().getTime()/1000;
+			
+			String timepost = "";
+			if(time<60)
+			{
+				timepost = " vừa xong";
+			}
+			if( 60<=time && time < 3600 )
+			{
+				int tamp = (int)time/60;
+				timepost = tamp + " phút trước"; 
+			}
+			
+			if( 3600<=time && time < 86400)
+			{
+				int tamp = (int)time/3600;
+				timepost = tamp + " h trước";
+			}
+			
+			if(time>= 86400)
+			{
+				int tamp = (int)time/86400;
+				timepost = tamp + " ngày trước";
+			}
+			
+				
+					
+				
+			
+			
+			psH.setTime(timepost);
 			
 			
 			users us = mongoTemplate.findOne(new Query(Criteria.where("id").is(psD.getId_user())), users.class);

@@ -19,8 +19,8 @@ public class GetPostForHome {
 	
 	private String urlPost;
 	
-	@JsonFormat(pattern="dd.MM.yyyy HH:mm:ss.SSSZ")
-	private Date time;
+	/*@JsonFormat(pattern="dd.MM.yyyy HH:mm:ss.SSSZ")*/
+	private String time;
 	
 	
 	public String getNameUser() {
@@ -79,13 +79,17 @@ public class GetPostForHome {
 		this.urlPost = urlPost;
 	}
 
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
+
+	
+
+	
 	
 	
 	
