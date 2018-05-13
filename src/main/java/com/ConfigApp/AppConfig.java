@@ -22,13 +22,14 @@ public class AppConfig extends AbstractMongoConfiguration {
 	@Override
 	public MongoClient mongoClient() {
 		// TODO Auto-generated method stub
-		return new MongoClient(new MongoClientURI("mongodb://nga:hDByXTewgs4sTVA86rmhgRrcgXvVx6go0g7iuIQbpavZHxyeMgF1c3YuVf38aQykjBysTCsUyvmwG7IM3K8k9A==@nga.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"));
+		return new MongoClient(new MongoClientURI("mongodb://ngavtt:221415552@ds259499.mlab.com:59499/mydatabase"));
+		/*return new MongoClient("localhost:27017");*/
 	}
 
 	@Override
 	protected String getDatabaseName() {
 		// TODO Auto-generated method stub
-		return "mangxahoidulich";
+		return "mydatabase";
 	}
 	
 	@Override
