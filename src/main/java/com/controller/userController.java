@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ConfigApp.CloudinaryConfig;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Singleton;
+import com.dto.DataTokenAndIdUser;
 import com.dto.GetInsertUser;
 import com.dto.GetUpdateImageForUser;
 import com.dto.GetUpdateUser;
@@ -87,10 +88,15 @@ public class userController {
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<String> Login(@RequestBody users use)
+	public ResponseEntity<DataTokenAndIdUser> Login(@RequestBody users use)
 	{
-		return new ResponseEntity<String>(us.Login(use),HttpStatus.OK);
+		if(us.Login(use)==null)
+		{
+			return new ResponseEntity<DataTokenAndIdUser>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<DataTokenAndIdUser>(us.Login(use),HttpStatus.OK);
 	}
+	
 	
 	
 

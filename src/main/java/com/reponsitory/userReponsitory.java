@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ConfigApp.CloudinaryConfig;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.dto.DataTokenAndIdUser;
 import com.dto.GetInsertUser;
 import com.dto.GetUpdateImageForUser;
 import com.dto.GetUpdateUser;
@@ -130,7 +131,7 @@ public class userReponsitory {
 		
 	}
 	
-	public String Login(users us)
+	public DataTokenAndIdUser Login(users us)
 	{
 		users u = mongoTemplate.findOne(new Query(Criteria.where("User_Name").is(us.getUser_Name())), users.class);
 		
@@ -139,7 +140,13 @@ public class userReponsitory {
 		if(u!=null)
 		{
 			if(us.getPassword()==us.getPassword())
-				return tokenReponsitory.createToken(u.getId());
+			{
+				DataTokenAndIdUser result = new DataTokenAndIdUser();
+				result.setToken(tokenReponsitory.createToken(u.getId()));
+				result.setIdUser(u.getId());
+				return result ;
+			}
+				
 		}
 		
 		return null;

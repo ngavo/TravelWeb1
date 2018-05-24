@@ -55,7 +55,7 @@ public class TokenConfig extends GenericFilterBean {
 	
 	public boolean allowRequestWithoutToken(HttpServletRequest request) 
 	{ 
-	    if (request.getRequestURI().contains("/")) {
+	    if (request.getRequestURI().contains("/user/login") || request.getRequestURI().contains("/post" )) {
 	        return true;
 	    }
 	    return false;
