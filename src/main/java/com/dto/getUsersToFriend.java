@@ -1,15 +1,15 @@
 package com.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="Users")
 public class getUsersToFriend {
 	
-	@Id
 	private String id;
 	
-	private String NicName;
+	private String nicName;
+	
+	private String urlUserName;
+	
+	
 
 	public String getId() {
 		return id;
@@ -20,12 +20,22 @@ public class getUsersToFriend {
 	}
 
 	public String getNicName() {
-		return NicName;
+		return nicName;
 	}
 
 	public void setNicName(String nicName) {
-		NicName = nicName;
+		this.nicName = nicName;
 	}
+
+	public String getUrlUserName() {
+		return urlUserName;
+	}
+
+	public void setUrlUserName(String urlUserName) {
+		this.urlUserName = urlUserName;
+	}
+
+	
 	
 	
 	

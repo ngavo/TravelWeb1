@@ -3,6 +3,7 @@ package com.reponsitory;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.dto.GetInsertFriend;
 import com.dto.getUsersToFriend;
 import com.entity.friends;
+import com.entity.users;
 
 @Repository
 public class friendReponsitory {
@@ -69,8 +71,14 @@ public class friendReponsitory {
 		List<String> list_id_friend = id_friend.getList_friend();
 		List<getUsersToFriend> _users = new ArrayList<getUsersToFriend>() ;
 		for (String friend : list_id_friend) {
-			getUsersToFriend us = mongoTemplate.findOne(new Query(Criteria.where("id").is(friend)), getUsersToFriend.class);
-			_users.add(us);
+			users us = mongoTemplate.findOne(new Query(Criteria.where("id").is(new ObjectId(friend))), users.class);
+			getUsersToFriend fr = new getUsersToFriend();
+			fr.setId(us.getId());
+			fr.setNicName(us.getNicName());
+			fr.setUrlUserName(us.getUrl());
+			
+			
+			_users.add(fr);
 		}
 		
 		return _users;
