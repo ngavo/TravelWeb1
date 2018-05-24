@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -24,9 +24,12 @@ import com.ConfigApp.CloudinaryConfig;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dto.GerUpdateImageForPost;
+import com.dto.GetDetailAPost;
 import com.dto.GetInsertPost;
 import com.dto.GetPostForHome;
 import com.dto.GetUpdateInformationPostNotImage;
+import com.dto.ListInformationCommentOfAPost;
+import com.entity.comments;
 import com.entity.friends;
 import com.entity.posts;
 import com.entity.users;
@@ -192,20 +195,93 @@ public class postReponsitory {
 		Map response = c.uploader().upload(f, ObjectUtils.emptyMap());
 		String ur=  (String)response.get("url");
 		
-		posts ps = mongoTemplate.findOne(new Query(Criteria.where("id").is(k.getId())), posts.class);
+		posts ps = mongoTemplate.findOne(new Query(Criteria.where("id").is(new ObjectId(k.getId()))), posts.class);
 		
 		ps.setUrl(ur);
 		return postJpa.save(ps);
 		
 	}
 	
-	public void UpdateInformationPostNotImage(GetUpdateInformationPostNotImage udpost)
+	public posts UpdateInformationPostNotImage(GetUpdateInformationPostNotImage udpost)
 	{
-		posts ps = mongoTemplate.findOne(new Query(Criteria.where("id").is(udpost.getId())), posts.class);
+		posts ps = mongoTemplate.findOne(new Query(Criteria.where("id").is(new ObjectId(udpost.getId()) )), posts.class);
 		ps.setContent(udpost.getContent());
 		ps.setLocation(udpost.getLocation());
 		ps.setTime(new Date());
-		mongoTemplate.save(ps);
+		/*mongoTemplate.save(ps);*/
+		
+		return postJpa.save(ps);
 	}
+	
+	public GetDetailAPost getDetailAPost(String idPost)
+	{
+		GetDetailAPost detailPost = new GetDetailAPost();
+		
+		posts ps = mongoTemplate.findOne(new Query(Criteria.where("id").is(new ObjectId(idPost))), posts.class);
+		
+		users us = mongoTemplate.findOne(new Query(Criteria.where("id").is(new ObjectId(ps.getId_user()))), users.class);
+		
+		detailPost.setIdPost(ps.getId());
+		detailPost.setIdUserPost(ps.getId_user());
+		detailPost.setLocation(ps.getLocation());
+		detailPost.setContent(ps.getContent());
+		detailPost.setUrlPost(ps.getUrl());
+		detailPost.setUrlUserPost(us.getUrl());
+		detailPost.setTimePost(ChuyenDay(ps.getTime()));
+		detailPost.setNicNameUserPost(us.getNicName());
+		
+		List<comments> listComment = mongoTemplate.find(new Query(Criteria.where("id_post").is(idPost)), comments.class);
+		List<ListInformationCommentOfAPost> listInfo = new ArrayList<ListInformationCommentOfAPost>();
+		for (comments comment : listComment) {
+			
+			ListInformationCommentOfAPost ifocomment = new ListInformationCommentOfAPost();
+			ifocomment.setIdComment(comment.getId());
+			ifocomment.setIdUserComment(comment.getId_user());
+			users usComment = mongoTemplate.findOne(new Query(Criteria.where("id").is(new ObjectId(comment.getId_user()))), users.class);
+			ifocomment.setUrlUserComment(usComment.getUrl());
+			ifocomment.setContentComment(comment.getContent());
+			ifocomment.setTimeComment(ChuyenDay(comment.getTime()));
+			ifocomment.setNicNameComment(usComment.getNicName());
+			listInfo.add(ifocomment);
+		}
+		
+		detailPost.setListComment(listInfo);
+		
+		return detailPost;
+		
+	}
+	
+	public String ChuyenDay(Date timeConvert)
+	{
+		long time = new Date().getTime()/1000 - timeConvert.getTime()/1000;
+		
+		String timepost = "";
+		if(time<60)
+		{
+			timepost = " vừa xong";
+		}
+		if( 60<=time && time < 3600 )
+		{
+			int tamp = (int)time/60;
+			timepost = tamp + " phút trước"; 
+		}
+		
+		if( 3600<=time && time < 86400)
+		{
+			int tamp = (int)time/3600;
+			timepost = tamp + " h trước";
+		}
+		
+		if(time>= 86400)
+		{
+			int tamp = (int)time/86400;
+			timepost = tamp + " ngày trước";
+		}
+		
+		return timepost;
+		
+	}
+	
+	
 
 }

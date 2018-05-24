@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dto.GerUpdateImageForPost;
+import com.dto.GetDetailAPost;
 import com.dto.GetInsertPost;
 import com.dto.GetPostForHome;
 import com.dto.GetUpdateInformationPostNotImage;
@@ -55,18 +56,25 @@ public class postController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Void> UpdateImagePost(@ModelAttribute GerUpdateImageForPost k) throws IOException
+	public ResponseEntity<posts> UpdateImagePost(@ModelAttribute GerUpdateImageForPost k) throws IOException
 	{
-		pos.UpdateImagePost(k);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		
+		return new ResponseEntity<posts>(pos.UpdateImagePost(k),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/updateinformation", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Void> UpdateInformationPostNotImage(@RequestBody GetUpdateInformationPostNotImage udpost )
+	public ResponseEntity<posts> UpdateInformationPostNotImage(@RequestBody GetUpdateInformationPostNotImage udpost )
 	{
-		pos.UpdateInformationPostNotImage(udpost);
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		
+		return new ResponseEntity<posts>(pos.UpdateInformationPostNotImage(udpost),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/detailPost/{id}", method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<GetDetailAPost> getDetailPost(@PathVariable("id") String id)
+	{
+		return new ResponseEntity<GetDetailAPost>(pos.getDetailAPost(id),HttpStatus.OK);
 	}
 
 
