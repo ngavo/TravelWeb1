@@ -22,7 +22,19 @@ public class GetInsertUser {
 	
 	private String Email;
 	
+	private String Birthday;
 	
+	
+	
+	
+	public String getBirthday() {
+		return Birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		Birthday = birthday;
+	}
+
 	private MultipartFile file;
 
 	public String getUser_Name() {

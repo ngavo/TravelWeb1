@@ -3,7 +3,6 @@ package com.dto;
 import org.springframework.web.multipart.MultipartFile;
 
 public class GerUpdateImageForPost {
-	
 	private String id;
 	private MultipartFile file;
 	public String getId() {

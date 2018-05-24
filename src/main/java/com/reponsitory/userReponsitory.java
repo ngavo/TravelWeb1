@@ -77,6 +77,7 @@ public class userReponsitory {
 		us.setSdt(user.getSdt());
 		us.setEmail(user.getEmail());
 		us.setUrl(k);
+		us.setBirthday(user.getBirthday());
 		
 		 users userImp =  usImp.save(us);
 		return tokenReponsitory.createToken(userImp.getId());
@@ -99,6 +100,7 @@ public class userReponsitory {
 		us.setAddress(user.getAddress());
 		us.setSdt(user.getSdt());
 		us.setEmail(user.getEmail());
+		us.setBirthday(user.getBirthday());
 		
 		
 		mongoTemplate.save(us);

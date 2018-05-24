@@ -17,6 +17,7 @@ public class users {
 	private String Address;
 	private String Sdt;
 	private String Email;
+	private String Birthday;
 	
 	private String url;
 	
@@ -75,6 +76,12 @@ public class users {
 	}
 	public void setEmail(String email) {
 		Email = email;
+	}
+	public String getBirthday() {
+		return Birthday;
+	}
+	public void setBirthday(String birthday) {
+		Birthday = birthday;
 	}
 	
 	

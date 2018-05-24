@@ -13,9 +13,18 @@ public class getUser {
 	private String Sdt;
 	private String Email;
 	private String url;
+	private String Birthday;
 	
 	
 	
+	
+	
+	public String getBirthday() {
+		return Birthday;
+	}
+	public void setBirthday(String birthday) {
+		Birthday = birthday;
+	}
 	public String getUrl() {
 		return url;
 	}

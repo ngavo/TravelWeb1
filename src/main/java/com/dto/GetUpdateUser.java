@@ -20,8 +20,20 @@ public class GetUpdateUser {
 	
 	private String Email;
 	
+	private String Birthday;
 	
 	
+	
+
+
+	public String getBirthday() {
+		return Birthday;
+	}
+
+
+	public void setBirthday(String birthday) {
+		Birthday = birthday;
+	}
 
 
 	public String getId() {
