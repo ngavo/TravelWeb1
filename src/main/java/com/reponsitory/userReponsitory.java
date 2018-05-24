@@ -46,9 +46,9 @@ public class userReponsitory {
 		return us;
 	}
 	
-	public getUser geInformationUser(String id) 
+	public users geInformationUser(String id) 
 	{
-		getUser us = mongoTemplate.findById(id, getUser.class);
+		users us = mongoTemplate.findById(id, users.class);
 		
 		return us;
 	}

@@ -38,6 +38,9 @@ public class postReponsitory {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
+	@Autowired
+	private postReponsitoryJpa postJpa;
+	
 	CloudinaryConfig cloudConfig = new CloudinaryConfig();
 	
 	//day la list bai post cua 1 user
@@ -48,7 +51,7 @@ public class postReponsitory {
 		return pos;
 	}
 	
-	public void insertPost(GetInsertPost _post) throws IOException
+	public posts insertPost(GetInsertPost _post) throws IOException
 	{
 		Cloudinary c = new  Cloudinary(ObjectUtils.asMap(
 				"cloud_name", "drpjudkfr",
@@ -68,7 +71,8 @@ public class postReponsitory {
 		ps.setUrl(url);
 		
 			ps.setTime(new Date());
-			mongoTemplate.insert(ps);
+			/*mongoTemplate.insert(ps);*/
+			return postJpa.save(ps);
 		
 	}
 	
@@ -175,7 +179,7 @@ public class postReponsitory {
 		
 	}
 	
-	public void UpdateImagePost(GerUpdateImageForPost k) throws IOException
+	public posts UpdateImagePost(GerUpdateImageForPost k) throws IOException
 	{
 		Cloudinary c = new  Cloudinary(ObjectUtils.asMap(
 				"cloud_name", "drpjudkfr",
@@ -191,7 +195,7 @@ public class postReponsitory {
 		posts ps = mongoTemplate.findOne(new Query(Criteria.where("id").is(k.getId())), posts.class);
 		
 		ps.setUrl(ur);
-		mongoTemplate.save(ps);
+		return postJpa.save(ps);
 		
 	}
 	

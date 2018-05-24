@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dto.GetUpdateComment;
 import com.entity.comments;
 import com.reponsitory.commentReponsitory;
 
@@ -29,12 +30,29 @@ public class commentController {
 		return  new ResponseEntity<List<comments>>(com.getListComment(id_post),HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(value="/insertcomment",method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Void> insertComment(@RequestBody comments _comment)
+	public ResponseEntity<comments> insertComment(@RequestBody comments _comment)
 	{
-		com.InsertComment(_comment);
 		
+		
+		return new ResponseEntity<comments>(com.InsertComment(_comment),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/updatecomment", method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<comments> updateComment(@RequestBody GetUpdateComment _comment)
+	{
+		
+		
+		return new ResponseEntity<comments>(com.UpdateCommnet(_comment),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/deletecomment/{id_comment}", method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Void> deleteComment(@PathVariable("id_commnet") String id_comment)
+	{
+		com.DeleteComment(id_comment);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 

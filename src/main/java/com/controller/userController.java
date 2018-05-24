@@ -53,9 +53,9 @@ public class userController {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<getUser> getInformationUser(@PathVariable("id") String id)
+	public ResponseEntity<users> getInformationUser(@PathVariable("id") String id)
 	{
-		return new ResponseEntity<getUser>(us.geInformationUser(id),HttpStatus.OK);
+		return new ResponseEntity<users>(us.geInformationUser(id),HttpStatus.OK);
 	}
 	
 	

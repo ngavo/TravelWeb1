@@ -19,6 +19,9 @@ public class commentReponsitory {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
+	@Autowired
+	private commentReponsitoryJpa cmmJpa;
+	
 	public List<comments> getListComment (String id)
 	{
 		List<comments> cm = mongoTemplate.find(new Query(Criteria.where("id_post").is(id)), comments.class);
@@ -27,15 +30,24 @@ public class commentReponsitory {
 		
 	}
 	
-	public void InsertComment(comments _comment)
+	public comments InsertComment(comments _comment)
 	{
 		_comment.setTime(new Date());
-		mongoTemplate.insert(_comment);
+		/*mongoTemplate.insert(_comment);*/
+		return cmmJpa.save(_comment);
 	}
 	
-	public void UpdateCommnet(GetUpdateComment _comment)
+	public void DeleteComment(String id_comment)
 	{
-		/*mongoTemplate.find(new Query(Criteria.where("id").is(new ObjectId(_comment.getIdComment()))), entityClass)*/
+		mongoTemplate.findAndRemove(new Query(Criteria.where("id").is(new ObjectId(id_comment))), comments.class);
+	}
+	
+	public comments UpdateCommnet(GetUpdateComment _comment)
+	{
+		 comments cm = mongoTemplate.findOne(new Query(Criteria.where("id").is(new ObjectId(_comment.getIdComment()))), comments.class);
+		 cm.setContent(_comment.getContent());
+		 cm.setTime(new Date());
+		 return cmmJpa.save(cm);
 	}
 
 }

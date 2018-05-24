@@ -39,19 +39,17 @@ public class postController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Void> insertPost(@ModelAttribute GetInsertPost _getPostToInsertDto) throws IOException
+	public ResponseEntity<posts> insertPost(@ModelAttribute GetInsertPost _getPostToInsertDto) throws IOException
 	{
-		pos.insertPost(_getPostToInsertDto);
 		
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		
+		return new ResponseEntity<posts>(pos.insertPost(_getPostToInsertDto),HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/postHome/{id}", method=RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<GetPostForHome>> findPostHome(@PathVariable("id") String id)
 	{
-		/*pos.findPostHome(id);*/
-		
 		return new ResponseEntity<List<GetPostForHome>>(pos.findPostHome(id),HttpStatus.OK);
 	}
 	
