@@ -2,6 +2,7 @@ package com.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection="Users")
 public class users {
@@ -9,9 +10,12 @@ public class users {
 	@Id
 	private String id;
 	
+	@Field(value="NicName")
+	private String NicName;
+	
 	private String User_Name;
 	private String Password;
-	private String NicName;
+	
 	private String Gender;
 	
 	private String Address;
@@ -23,6 +27,7 @@ public class users {
 	
 	
 
+	
 	public String getUrl() {
 		return url;
 	}

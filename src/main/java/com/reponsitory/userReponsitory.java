@@ -11,6 +11,7 @@ import java.util.Map;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -154,6 +155,14 @@ public class userReponsitory {
 		return null;
 	}
 	
+	
+	public List<users> getListUserWithName(String name)
+	{
+		BasicQuery query =  new BasicQuery("{\"NicName\": {$regex : '" + name + "'} }");
+		/*List<users> us = mongoTemplate.find(new Query(Criteria.where("NicName").is(name)), users.class);*/
+		List<users> us = mongoTemplate.find(query,users.class);
+		return us;
+	}
 	
 
 }

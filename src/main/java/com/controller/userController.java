@@ -97,7 +97,14 @@ public class userController {
 		return new ResponseEntity<DataTokenAndIdUser>(us.Login(use),HttpStatus.OK);
 	}
 	
+	//tim kiem user theo user name
 	
+	@RequestMapping(value="name/{name}", method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<users>> getListUserWithName(@PathVariable("name") String name)
+	{
+		return new ResponseEntity<List<users>> (us.getListUserWithName(name), HttpStatus.OK);
+	}
 	
 
 }

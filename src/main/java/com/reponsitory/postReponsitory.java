@@ -47,11 +47,63 @@ public class postReponsitory {
 	CloudinaryConfig cloudConfig = new CloudinaryConfig();
 	
 	//day la list bai post cua 1 user
-	public List<posts> findPost(String id_user)
+	public List<GetPostForHome> findPost(String id_user)
 	{
-		List<posts> pos = mongoTemplate.find(new Query(Criteria.where("id_user").is(id_user)),posts.class);
+		List<posts> poss = mongoTemplate.find(new Query(Criteria.where("id_user").is(id_user)),posts.class);
 		
-		return pos;
+		
+		List<GetPostForHome> listPost = new ArrayList<GetPostForHome>();
+		
+		for (posts getPostForHome : poss) {
+			
+			users us = mongoTemplate.findOne(new Query(Criteria.where("id").is(new ObjectId(id_user))), users.class);
+			
+			GetPostForHome ps = new GetPostForHome();
+			ps.setId(getPostForHome.getId());
+			ps.setId_user(us.getId());
+			ps.setAvatar(us.getUrl());
+			ps.setNameUser(us.getNicName());
+			ps.setLocation(getPostForHome.getLocation());
+			ps.setContent(getPostForHome.getContent());
+			ps.setUrlPost(getPostForHome.getUrl());
+			
+			
+			long time = new Date().getTime()/1000 - getPostForHome.getTime().getTime()/1000;
+			
+			String timepost = "";
+			if(time<60)
+			{
+				timepost = " vừa xong";
+			}
+			if( 60<=time && time < 3600 )
+			{
+				int tamp = (int)time/60;
+				timepost = tamp + " phút trước"; 
+			}
+			
+			if( 3600<=time && time < 86400)
+			{
+				int tamp = (int)time/3600;
+				timepost = tamp + " h trước";
+			}
+			
+			if(time>= 86400)
+			{
+				int tamp = (int)time/86400;
+				timepost = tamp + " ngày trước";
+			}
+			
+			ps.setTime(timepost);
+			
+			listPost.add(ps);
+			
+			
+			
+		}
+		
+		
+		
+		return listPost;
 	}
 	
 	public posts insertPost(GetInsertPost _post) throws IOException

@@ -31,11 +31,11 @@ public class postController {
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<posts>> getPosts(@PathVariable("id") String id)
+	public ResponseEntity<List<GetPostForHome>> getPosts(@PathVariable("id") String id)
 	{
-		List<posts> posk = pos.findPost(id);
+		List<GetPostForHome> posk = pos.findPost(id);
 		
-		return new ResponseEntity<List<posts>>(posk,HttpStatus.OK);
+		return new ResponseEntity<List<GetPostForHome>>(posk,HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
