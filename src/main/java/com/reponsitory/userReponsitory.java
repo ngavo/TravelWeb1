@@ -158,7 +158,7 @@ public class userReponsitory {
 	
 	public List<users> getListUserWithName(String name)
 	{
-		BasicQuery query =  new BasicQuery("{\"NicName\": {$regex : '" + name + "'} }");
+		BasicQuery query =  new BasicQuery("{NicName: {$regex : /" + name + "/i}}");
 		/*List<users> us = mongoTemplate.find(new Query(Criteria.where("NicName").is(name)), users.class);*/
 		List<users> us = mongoTemplate.find(query,users.class);
 		return us;
