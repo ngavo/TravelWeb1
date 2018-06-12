@@ -51,7 +51,7 @@ public class commentController {
 	
 	@RequestMapping(value="/deletecomment/{id_comment}", method=RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Void> deleteComment(@PathVariable("id_commnet") String id_comment)
+	public ResponseEntity<Void> deleteComment(@PathVariable("id_comment") String id_comment)
 	{
 		com.DeleteComment(id_comment);
 		return new ResponseEntity<Void>(HttpStatus.OK);
