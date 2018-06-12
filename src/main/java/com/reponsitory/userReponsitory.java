@@ -147,6 +147,8 @@ public class userReponsitory {
 				DataTokenAndIdUser result = new DataTokenAndIdUser();
 				result.setToken(tokenReponsitory.createToken(u.getId()));
 				result.setIdUser(u.getId());
+				result.setUrlUser(u.getUrl());
+				result.setNicName(u.getNicName());
 				return result ;
 			}
 				
