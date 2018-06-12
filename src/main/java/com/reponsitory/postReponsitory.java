@@ -297,6 +297,7 @@ public class postReponsitory {
 			listInfo.add(ifocomment);
 		}
 		
+		Collections.reverse(listInfo);
 		detailPost.setListComment(listInfo);
 		
 		return detailPost;
