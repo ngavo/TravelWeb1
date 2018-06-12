@@ -21,6 +21,7 @@ import com.dto.GetPostForHome;
 import com.dto.GetUpdateInformationPostNotImage;
 import com.entity.posts;
 import com.reponsitory.postReponsitory;
+import com.reponsitory.postReponsitoryJpa;
 
 @Controller
 @RequestMapping("/post")
@@ -28,6 +29,9 @@ public class postController {
 	
 	@Autowired
 	private postReponsitory pos;
+	
+	@Autowired
+	private postReponsitoryJpa posJpa;
 	
 	@RequestMapping(value="{id}", method=RequestMethod.GET)
 	@ResponseBody
@@ -75,6 +79,14 @@ public class postController {
 	public ResponseEntity<GetDetailAPost> getDetailPost(@PathVariable("id") String id)
 	{
 		return new ResponseEntity<GetDetailAPost>(pos.getDetailAPost(id),HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/deletePost/{id}", method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Void> delete(@PathVariable("id") String id)
+	{
+		posJpa.deleteById(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 
